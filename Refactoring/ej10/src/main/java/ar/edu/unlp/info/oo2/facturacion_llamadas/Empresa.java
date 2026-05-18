@@ -12,69 +12,40 @@ public class Empresa {
 	static double descuentoFis = 0;
 
 	public boolean agregarNumeroTelefono(String str) {
-		boolean encontre = guia.getLineas().contains(str);
-		if (!encontre) {
+		if (!guia.getLineas().contains(str)) {
 			guia.getLineas().add(str);
-			encontre= true;
-			return encontre;
+			return true;
 		}
-		else {
-			encontre= false;
-			return encontre;
-		}
+		return false;
 	}
 
 	public String obtenerNumeroLibre() {
 		return guia.obtenerNumeroLibre();
 	}
 
-	public Cliente registrarUsuario(String data, String nombre, String tipo) {
-		Cliente var = new Cliente();
-		if (tipo.equals("fisica")) {
-			var.setNombre(nombre);
-			String tel = this.obtenerNumeroLibre();
-			var.setTipo(tipo);
-			var.setNumeroTelefono(tel);
-			var.setDNI(data);
-		}
-		else if (tipo.equals("juridica")) {
-			String tel = this.obtenerNumeroLibre();
-			var.setNombre(nombre);
-			var.setTipo(tipo);
-			var.setNumeroTelefono(tel);
-			var.setCuit(data);
-		}
-		clientes.add(var);
-		return var;
+	public Cliente registrarUsuario(String data, String nombre, TipoCliente tipo) {
+		Cliente cliente = new Cliente();
+		String telefono = this.obtenerNumeroLibre();
+		tipo.crearCliente(cliente, nombre, tipo, telefono, data);
+		clientes.add(cliente);
+		return cliente;
 	}
 
-	public Llamada registrarLlamada(Cliente origen, Cliente destino, String t, int duracion) {
-		Llamada llamada = new Llamada(t, origen.getNumeroTelefono(), destino.getNumeroTelefono(), duracion);
+	public Llamada registrarLlamada(Cliente origen, Cliente destino, TipoLlamada tipoLlamada, int duracion) {
+		Llamada llamada = new Llamada(tipoLlamada, origen.getNumeroTelefono(), destino.getNumeroTelefono(), duracion);
 		llamadas.add(llamada);
 		origen.llamadas.add(llamada);
 		return llamada;
 	}
 
 	public double calcularMontoTotalLlamadas(Cliente cliente) {
-		double c = 0;
-		for (Llamada l : cliente.llamadas) {
-			double auxc = 0;
-			if (l.getTipoDeLlamada() == "nacional") {
-				// el precio es de 3 pesos por segundo más IVA sin adicional por establecer la llamada
-				auxc += l.getDuracion() * 3 + (l.getDuracion() * 3 * 0.21);
-			} else if (l.getTipoDeLlamada() == "internacional") {
-				// el precio es de 150 pesos por segundo más IVA más 50 pesos por establecer la llamada
-				auxc += l.getDuracion() * 150 + (l.getDuracion() * 150 * 0.21) + 50;
-			}
-
-			if (cliente.getTipo() == "fisica") {
-				auxc -= auxc*descuentoFis;
-			} else if(cliente.getTipo() == "juridica") {
-				auxc -= auxc*descuentoJur;
-			}
-			c += auxc;
+		double montoTotal = 0;
+		for (Llamada llamada : cliente.llamadas) {
+			double montoLlamada = llamada.getTipoDeLlamada().calcularMonto(llamada);
+			montoLlamada-= cliente.getTipo().descuento(montoLlamada, this);
+			montoTotal += montoLlamada;
 		}
-		return c;
+		return montoTotal;
 	}
 
 	public int cantidadDeUsuarios() {

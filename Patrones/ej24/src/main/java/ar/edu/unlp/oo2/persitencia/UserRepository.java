@@ -15,7 +15,7 @@ public class UserRepository {
 			List<JSONObject> usersData = (List<JSONObject>) parser.parse(new FileReader("users.json"));
 			return usersData.stream()
 				.filter(userData -> userData.get("username").equals(aUsername)).findFirst()
-				.map(userData -> new User((String) userData.get("username"), (String) userData.get("email")))
+				.map(userData -> new ProxyUser((String) userData.get("username"), (String) userData.get("email")))
 				.orElse(null);
 		} catch (Exception e) {
 			return null;

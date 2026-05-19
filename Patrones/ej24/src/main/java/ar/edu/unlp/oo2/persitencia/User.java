@@ -44,4 +44,6 @@ public class User implements PersistableUser {
 	public void addPosts(List<Post> posts) {
 		this.posts.addAll(posts);
 	}
+	
+	
 }

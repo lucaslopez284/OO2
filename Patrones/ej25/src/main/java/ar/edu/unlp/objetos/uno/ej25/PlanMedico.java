@@ -19,10 +19,10 @@ public abstract class PlanMedico {
 		return 0;
 	}
 	
-	public abstract double montoFijo(Afiliado unAfiliado);
-	public abstract double grupoFamiliar(Afiliado unAfiliado);
-	public abstract double coberturaViajera(Afiliado unAfiliado);
-	public abstract double seguroInternacion(Afiliado unAfiliado);
+	protected abstract double montoFijo(Afiliado unAfiliado);
+	protected abstract double grupoFamiliar(Afiliado unAfiliado);
+	protected abstract double coberturaViajera(Afiliado unAfiliado);
+	protected abstract double seguroInternacion(Afiliado unAfiliado);
 	
 	public double costoMensual(Afiliado unAfiliado) {
 		return this.montoFijo(unAfiliado) +

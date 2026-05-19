@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class PostRepository {
+public class PostRepository  {
 
 	@SuppressWarnings("unchecked")
 	public List<Post> findPostsByUsername(String aUsername) {

@@ -1,5 +1,8 @@
 package ar.edu.unlp.oo1.ejercicio1.impl;
 
+import java.util.logging.Logger;
+
+
 /**
  * Completar esta clase de acuerdo a lo especificado en el cuadernillo
  *
@@ -9,6 +12,7 @@ public class WallPostImpl implements WallPost {
 	private String text;
 	private int likes;
 	private boolean isFeatured;
+	private static final Logger logger = Logger.getLogger(WallPostImpl.class.getName());
 
 	public WallPostImpl() {
 		this.text = "Undefined post";
@@ -39,14 +43,20 @@ public class WallPostImpl implements WallPost {
 
 	@Override
 	public void like() {
+		logger.info("Se dio un like");
 		this.likes = this.likes + 1;
+		if (likes == 10) {
+			logger.warning("Se llego a 10 likes");
+		}
 
 	}
 
 	@Override
 	public void dislike() {
+		logger.info("Se dio un dislike");
 		if (likes > 0) {
 			this.likes = this.likes - 1;
+			logger.warning("Se llego a 0 likes");
 		}
 
 	}

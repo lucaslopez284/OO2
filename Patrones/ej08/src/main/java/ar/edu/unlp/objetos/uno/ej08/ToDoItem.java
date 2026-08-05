@@ -19,6 +19,14 @@ public class ToDoItem {
         this.inicio = null;
         this.fin = null;
    }
+
+   public void setInicio(LocalDate inicio) {
+	   this.inicio = inicio;
+   }
+
+   public void setFin(LocalDate fin) {
+	   this.fin = fin;
+   }
    
    public void setState(ToDoItemState state) {
 	   this.state = state;
@@ -30,7 +38,6 @@ public class ToDoItem {
 */
         public void start() {
         	this.state.start(this);
-        	this.inicio = LocalTime.now();
         }
 
 	/**
@@ -48,7 +55,6 @@ public class ToDoItem {
 */
         public void finish() {
         	this.state.finish(this);
-        	this.fin = LocalTime.now();
         }
 
 

@@ -14,6 +14,7 @@ public class InProgress implements ToDoItemState {
 	@Override
 	public void finish(ToDoItem contexto) {
 		contexto.setState(new Finish());
+		contexto.setFin(LocalDate.now());
 	}
 
 }

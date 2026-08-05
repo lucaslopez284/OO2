@@ -30,7 +30,7 @@ public class ToDoItem {
 */
         public void start() {
         	this.state.start(this);
-        	this.fin = LocalTime.now();
+        	this.inicio = LocalTime.now();
         }
 
 	/**

@@ -11,6 +11,7 @@ public class Pending implements ToDoItemState {
 	@Override
 	public void start(ToDoItem contexto) {
 		contexto.setState(new InProgress());
+		contexto.setInicio(LocalDate.now());
 	}
 
 	@Override
